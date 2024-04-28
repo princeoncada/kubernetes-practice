@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: server-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      component: server
+  template:
+    metadata:
+      labels:
+        component: server
+    spec:
+      containers:
+        - name: server
+          image: pgsoncada/server-image
+          ports:
+            - containerPort: 5000
+          env:
+            - name: MYSQLUSER
+              value: 'user'
+            - name: MYSQLPASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: db-secrets
+                  key: db-password
+            - name: MYSQLDATABASE
+              value: 'db_test'
+            - name: MYSQLHOST
+              value: 'mysql-cluster-ip-service'
+            - name: MYSQLPORT
+              value: '3306'

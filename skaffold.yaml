@@ -1,0 +1,36 @@
+apiVersion: skaffold/v2beta12
+kind: Config
+deploy:
+  kubectl:
+    manifests:
+      - ./k8s/client-deployment.yaml
+      - ./k8s/server-deployment.yaml
+      - ./k8s/client-cluster-ip-service.yaml
+      - ./k8s/server-cluster-ip-service.yaml
+      - ./k8s/ingress-service.yaml
+build:
+  local:
+    push: false
+  artifacts:
+    - image: pgsoncada/client-image
+      context: client
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: "src/**/*.js"
+            dest: .
+          - src: "src/**/*.css"
+            dest: .
+          - src: "src/**/*.html"
+            dest: .
+          - src: "src/**/*.jsx"
+            dest: .
+    - image: pgsoncada/server-image
+      context: server
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        manual:
+          - src: "*.js"
+            dest: .
