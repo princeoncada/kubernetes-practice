@@ -35,7 +35,7 @@ Within this directory, we will create three subdirectories for our client, API s
 ```
 mkdir client
 mkdir server
-mkdir nginx
+mkdir k8s
 ```
 ## Setting up the Client
 1. **Create the Vite + React application:**
