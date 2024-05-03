@@ -40,7 +40,7 @@ mkdir k8s
 ## Setting up the Client
 1. **Create the Vite + React application:**
 ```
-npm create vite@latest client --template react
+npm create vite@latest client -- --template react
 cd client
 ```
 2. **Install dependencies:**
